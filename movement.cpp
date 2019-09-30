@@ -1,3 +1,5 @@
+#include "robot.h"
+
 void wait() 
 {
     int leftBusy;
@@ -10,4 +12,23 @@ void wait()
     } while (leftBusy || rightBusy);
 
     resetEncoders(DC_ADDRESS);
+}
+
+void moveDistance(int motorSpeed = SPEED, int direction = FORWARDS, long mm) {
+    long motorOneDegrees;
+    long motorTwoDegrees;
+
+    /*If direction is true move forwards, if not move backwards*/
+    if (direction)
+    {
+        motorOneDegrees = (millimeters/WHEEL_CIRC * 360);      //forward
+        motorTwoDegrees = (millimeters/WHEEL_CIRC * 360) * -1; //backwards
+    }
+    else
+    {
+        motorOneDegrees = (millimeters/WHEEL_CIRC * 360) * -1; //backwards
+        motorTwoDegrees = (millimeters/WHEEL_CIRC * 360);      //forwards
+    }
+
+    mc.setMotorDegrees(DC_ADDRESS, motorSpeed, motorOneDegrees, motorSpeed, motorTwoDegrees);
 }

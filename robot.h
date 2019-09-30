@@ -9,6 +9,12 @@
 #include "Motor_Controller.h"
 #include "Utils.h"
 
+using namespace std;
+
+/* Begin Variables */
+extern NiFpga_Session myrio_session;
+NiFpga_Status status;
+
 /* Constants */
 #define DC_ADDRESS 1                /* I2C address for the DC Motor */
 #define SERVO_ADDRESS 2             /* I2C address for the Servo Motor */
