@@ -37,7 +37,7 @@ NiFpga_Status status;
 
 /* Function Prototypes */
 void begin();
-void moveDistance(int motorSpeed, int direction, long mm);
+void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS);
 void moveSeconds(int seconds, int direction);
 void moveHead(int position);
 void tightTurn(long degrees);

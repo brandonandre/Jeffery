@@ -34,7 +34,7 @@ void wait()
     resetEncoders(DC_ADDRESS);
 }
 
-void moveDistance(int motorSpeed = SPEED, int direction = FORWARDS, long mm) 
+void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS) 
 {
     long motorOneDegrees;
     long motorTwoDegrees;
