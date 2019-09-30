@@ -8,16 +8,23 @@ void begin()
 		return status;
 	}
 
-	MyRio_I2c i2c;
 	status = Utils::setupI2CB(&myrio_session, &i2c);
 
-	Motor_Controller mc = Motor_Controller(&i2c);
+	mc = Motor_Controller(&i2c);
 	mc.controllerEnable(DC);
 	mc.controllerEnable(SERVO);
 
 	int volt = mc.readBatteryVoltage(1);
 	printf("%d\n\n", volt);
 
+}
+
+void close()
+{
+    mc.controllerReset(DC);
+	mc.controllerReset(SERVO);
+
+	status = MyRio_Close();
 }
 
 void wait() 
