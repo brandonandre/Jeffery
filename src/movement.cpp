@@ -80,7 +80,7 @@ void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS)
     long motorOneDegrees;
     long motorTwoDegrees;
 
-    /*If direction is true move forwards, if not move backwards*/
+    /* If direction is true move forwards, if not move backwards */
     if (direction)
     {
         motorOneDegrees = (millimeters/WHEEL_CIRC * 360);      //forward
