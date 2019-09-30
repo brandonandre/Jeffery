@@ -1,5 +1,7 @@
+#include "robot.h"
+
 int main(int argc, char const *argv[])
 {
-    /* code */
+    begin();
     return 0;
 }
