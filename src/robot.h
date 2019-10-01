@@ -11,12 +11,6 @@
 
 using namespace std;
 
-/* Begin Variables */
-extern NiFpga_Session myrio_session;
-NiFpga_Status status;
-Motor_Controller mc;
-MyRio_I2c i2c;
-
 /* Constants */
 #define DC_ADDRESS 1                /* I2C address for the DC Motor */
 #define SERVO_ADDRESS 2             /* I2C address for the Servo Motor */
