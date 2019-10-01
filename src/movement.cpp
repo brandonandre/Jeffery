@@ -100,6 +100,15 @@ void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS)
     mc.setMotorDegrees(DC_ADDRESS, motorSpeed, motorOneDegrees, motorSpeed, motorTwoDegrees);
 }
 
+/*
+ *    Purpose: Allows both motors to turn
+ *    Date: Septemeber 30, 2019
+ *    Authors: Chris Ikongo
+ *    Parameters: degrees(long) a negative number will cause it to turn to the left
+ *                  and a positive number to the right
+ *    Return value: N/A
+ *     Algorithm: 2 * (pi) * (radius) for the radius and simplified circle math.
+ */
 void tightTurn(long degrees)
 {
     // simplified math for distance each wheel should turn for specified degrees
