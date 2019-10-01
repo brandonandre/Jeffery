@@ -42,9 +42,7 @@ void close()
     status = MyRio_Close();
 }
 
-<<<<<<< HEAD
 void wait()
-=======
 /*
  *    Purpose: Wait until the motor encoders are finished with a specific task.
  *    Date: Septemeber 30, 2019
@@ -54,30 +52,24 @@ void wait()
  *    Algorithm: None
  */
 void wait() 
->>>>>>> origin/master
 {
     int leftBusy;
     int rightBusy;
 
-<<<<<<< HEAD
     do
     {
         rightBusy = readMotorBusy(DC_ADDRESS, 1);
         leftBusy = readMotorBusy(DC_ADDRESS, 2);
-=======
     do {
         rightBusy = mc.readMotorBusy(DC_ADDRESS,1);
         leftBusy = mc.readMotorBusy(DC_ADDRESS,2);
->>>>>>> origin/master
         Utils::waitFor(10);
     } while (leftBusy || rightBusy);
 
     mc.resetEncoders(DC_ADDRESS);
 }
 
-<<<<<<< HEAD
 void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS)
-=======
 /*
 *    Purpose: Move the robot forward or backwards a specific speed and distance.
 *    Date: Septemeber 30, 2019
@@ -89,7 +81,6 @@ void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS)
 *    Algorithm: None
 */
 void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS) 
->>>>>>> origin/master
 {
     long motorOneDegrees;
     long motorTwoDegrees;
