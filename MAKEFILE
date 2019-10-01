@@ -1,0 +1,24 @@
+SRC_DIR = src
+OBJ_DIR = obj
+CPL_DIR = compiler
+INC_DIR = include
+
+SRC = $(wildcard $(SRC_DIR)/*.c*)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+CC 		= $(CPL_DIR)/arm-nilrt-linux-gnueabi-g++
+CFLAGS	= --sysroot=$(CPL_DIR)/cortexa9-vfpv3-nilrt-linux-gnueabi -std=c++11 -pthread
+INCLUDE = -I"$(INC_DIR)/libmyrio.a" -I"$(CPL_DIR)/cortexa9-vfpv3-nilrt-linux-gnueabi/usr/include" -I"$(CPL_DIR)/cortexa9-vfpv3-nilrt-linux-gnueabi/usr/include/c++/4.9.2/arm-nilrt-linux-gnueabi" 
+SOURCE 	= (wildcard $(SRC_DIR)/*.c*)
+OUT 	= main.out
+FLAGS	= -g -c -Wall -DMyRio_1900 -O0 -g3 -Wall -std=gnu++11 -fmessage-length=0 -mfpu=vfpv3 -mfloat-abi=softfp
+LFLAGS 	= -Lcsupport -lcsupport -ldl
+
+all: $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) -g $(OBJ) -o $(OUT) $(LFLAGS)
+
+main.o: main.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) $(FLAGS) main.cpp
+
+clean:
+	rm -f $(OBJS) $(OUT)
