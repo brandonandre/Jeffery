@@ -31,6 +31,10 @@ using namespace std;
 #define JEFF_WIDTH 270             /* Width of robot from wheel to wheel in mm */
 #define WHEEL_CIRC 319.19             /* Circumference of each wheel on robot in mm */
 
+/* Servo Addresses*/
+#define HEAD_SERVO 0x28 /* Address for the head servo 1 */
+#define CLAW_SERVO 0x29 /* Address for claw servo 2 */
+
 /* Function Prototypes */
 void begin();
 void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS);
@@ -43,3 +47,6 @@ void clamp();
 void unclamp();
 void wait();
 void close();
+
+/* Global Variables */
+int headPosition = HEAD_TOP;

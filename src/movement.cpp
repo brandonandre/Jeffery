@@ -142,3 +142,100 @@ void tightTurn(long degrees)
     Utils::waitFor(wheelTurn * 15);
     mc.controllerReset(DC_ADDRESS);
 }
+
+/*
+*    Purpose:       Retrieve the head position from the robot.
+*    Date:          05/02/2019
+*    Authors:       Brandon Andre
+*    Parameters:    None
+*    Return value:  Int, range from 0 to 100. 100 Being the very top of the robot, 0 being the bottom.
+*/
+int getCurrentHeadPosition() {
+    return headPosition; 
+}
+
+/*
+*    Purpose:       Reset the head position to the top of the robot belt. This will recalibrate it.
+*    Date:          05/02/2019
+*    Authors:       Brandon Andre
+*    Parameters:    None
+*    Return value:  None
+*/
+void resetHead() {
+    // Begin transmission to servo motor controller.
+    mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, COUNTER_CLOCKWISE);
+
+    // Wait 5 seconds to reset the head to the top
+    Utils::waitFor(5);
+
+    // Stop moving the servo motor.
+    mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, SERVO_STOP);
+
+    headPosition = HEAD_TOP;
+}
+
+/*
+*    Purpose:       Move the robot head to a specific position on the belt.
+*    Date:          05/02/2019
+*    Authors:       Brandon Andre
+*    Parameters:    position
+                        The specific location to move the robot head. Please note this is an estimate.
+                        0 being the bottom of the robot belt, 100 being the top of the robot belt.
+                        You can also use the constants, HEAD_TOP and HEAD_BOTTOM.
+*    Return value:  None
+*/
+void moveHead(int position) 
+{
+    // Don't do anything if the current position is where it needs to be.
+    if (position == headPosition)
+        return;
+
+    // Check if the position matches the limit constrains.
+    if (position > 100 || position < 0)
+    {
+        // Reset the head location...
+        resetHead();
+        return;
+    }
+
+    // Determine the direction to move the servo.
+    // current: 0, dersired: 100
+    if (position < headPosition)
+    {
+        mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, CLOCKWISE);
+    }
+    else
+    {
+        mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, COUNTER_CLOCKWISE);
+    }
+
+    // Determine how long to move the servo so it reaches the dersired location.
+    Utils::waitFor((abs(headPosition - position));
+
+    headPosition = position;
+
+    // Stop the servo motor from spinning.
+    mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, SERVO_STOP);
+}
+
+/*
+*    Purpose:       Move the clamp servo to hold on to an object.
+*    Date:          19/03/2019
+*    Authors:       Brandon Andre
+*    Parameters:    None
+*    Return value:  None
+*/
+void clamp() {
+    mc.setServoSpeed(SERVO_ADDRESS, CLAW_SERVO, CLAW_CLOSED);
+}
+
+/*
+*    Purpose:       Move the clamp servo to let go of an object.
+*    Date:          19/03/2019
+*    Authors:       Brandon Andre
+*    Parameters:    None
+*    Return value:  None
+*/
+void unclamp() {
+    mc.setServoSpeed(SERVO_ADDRESS, CLAW_SERVO, CLAW_OPEN);
+}
