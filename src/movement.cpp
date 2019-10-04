@@ -6,6 +6,9 @@ NiFpga_Status status;
 Motor_Controller mc;
 MyRio_I2c i2c;
 
+/* Memory */
+int headPosition = HEAD_TOP;
+
 /*
 *    Purpose: reset and initialize the motor controllers and other starting processes.
 *    Date: Septemeber 30, 2019
@@ -16,6 +19,10 @@ MyRio_I2c i2c;
 */
 void begin()
 {
+    int status = MyRio_Open();
+
+    status = Utils::setupI2CB(&myrio_session, &i2c);
+
     mc = Motor_Controller();
     mc.init(&myrio_session);
     mc.controllerEnable(DC);
@@ -210,7 +217,7 @@ void moveHead(int position)
     }
 
     // Determine how long to move the servo so it reaches the dersired location.
-    Utils::waitFor((abs(headPosition - position));
+    Utils::waitFor(abs(headPosition - position));
 
     headPosition = position;
 

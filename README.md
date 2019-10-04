@@ -5,7 +5,6 @@ The dog robot
 
 1. Download and install docker for your computer.
 2. Run "docker build -t compiler ."
-3. Run "docker run -t compiler"
 
 # Contributors
 
