@@ -35,13 +35,10 @@ using namespace std;
 #define HEAD_SERVO 0x28 /* Address for the head servo 1 */
 #define CLAW_SERVO 0x29 /* Address for claw servo 2 */
 
-<<<<<<< HEAD
 /* Claw Constants */
 #define CLAW_OPEN 180
 #define CLAW_CLOSED 0
 
-=======
->>>>>>> e389ad2073db5396996610a0f18437abcdaf3dfe
 /* Function Prototypes */
 void begin();
 void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS);
