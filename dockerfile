@@ -15,6 +15,7 @@ RUN bash oecore-x86_64-cortexa9-vfpv3-toolchain-5.0.sh
 # Move all the developer files
 RUN pwd
 WORKDIR /development
+
 RUN pwd
 COPY ./src /development
 COPY ./makefile /development
