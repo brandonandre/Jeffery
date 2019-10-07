@@ -25,6 +25,8 @@ void begin()
     mc.controllerEnable(DC);
     mc.controllerEnable(SERVO);
 
+    mc.resetEncoders(DC_ADDRESS);
+
     int volt = mc.readBatteryVoltage(1);
     printf("Battery Voltage: %d\n\n", volt);
 }
@@ -61,7 +63,7 @@ void wait()
     do {
         rightBusy = mc.readMotorBusy(DC_ADDRESS, 0);
         leftBusy = mc.readMotorBusy(DC_ADDRESS, 1);
-        Utils::waitFor(1);
+	    printf("L:%d R:%d\n",leftBusy, rightBusy);
     } while (leftBusy || rightBusy);
 
     mc.resetEncoders(DC_ADDRESS);
@@ -95,7 +97,9 @@ void moveDistance(long mm, int motorSpeed, int direction)
     }
 
     mc.setMotorDegrees(DC_ADDRESS, motorSpeed, motorOneDegrees, motorSpeed, motorTwoDegrees);
-    wait();
+    Utils::waitFor(mm / 60);
+    mc.resetEncoders(DC_ADDRESS);
+    Utils::waitFor(1);
 }
 
 /*
@@ -141,11 +145,14 @@ void tightTurn(long degrees)
     // simplified math for distance each wheel should turn for specified degrees
     long wheelTurn = (M_PI * JEFF_WIDTH * -degrees) / WHEEL_CIRC;
 
+    printf("Wheel turn: %ld\n", wheelTurn);
+
     mc.setMotorDegrees(DC_ADDRESS, SPEED, wheelTurn, SPEED, wheelTurn);
 
     // Reset the encoders after the turn has taken place.
-    Utils::waitFor(wheelTurn * 15);
-    mc.controllerReset(DC_ADDRESS);
+    Utils::waitFor(abs(degrees) / 30);
+    mc.resetEncoders(DC_ADDRESS);
+    Utils::waitFor(1);
 }
 
 /*
