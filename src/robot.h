@@ -54,8 +54,4 @@ void clamp();
 void unclamp();
 void wait();
 void close();
-
-/* Memory */
-int headPosition = HEAD_TOP;
-
 #endif
