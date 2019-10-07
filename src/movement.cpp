@@ -59,8 +59,8 @@ void wait()
     int rightBusy;
 
     do {
-        rightBusy = mc.readMotorBusy(DC_ADDRESS, 1);
-        leftBusy = mc.readMotorBusy(DC_ADDRESS, 2);
+        rightBusy = mc.readMotorBusy(DC_ADDRESS, 0);
+        leftBusy = mc.readMotorBusy(DC_ADDRESS, 1);
         Utils::waitFor(1);
     } while (leftBusy || rightBusy);
 
