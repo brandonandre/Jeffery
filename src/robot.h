@@ -51,6 +51,3 @@ void clamp();
 void unclamp();
 void wait();
 void close();
-
-/* Global Variables */
-int headPosition = HEAD_TOP;
