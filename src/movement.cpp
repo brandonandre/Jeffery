@@ -59,9 +59,9 @@ void wait()
     int rightBusy;
 
     do {
-        rightBusy = mc.readMotorBusy(DC_ADDRESS,1);
-        leftBusy = mc.readMotorBusy(DC_ADDRESS,2);
-        Utils::waitForMicro(10);
+        rightBusy = mc.readMotorBusy(DC_ADDRESS, 1);
+        leftBusy = mc.readMotorBusy(DC_ADDRESS, 2);
+        Utils::waitFor(1);
     } while (leftBusy || rightBusy);
 
     mc.resetEncoders(DC_ADDRESS);
