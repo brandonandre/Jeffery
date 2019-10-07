@@ -26,7 +26,7 @@ void begin()
     mc.controllerEnable(SERVO);
 
     int volt = mc.readBatteryVoltage(1);
-    printf("%d\n\n", volt);
+    printf("Battery Voltage: %d\n\n", volt);
 }
 
 /*
