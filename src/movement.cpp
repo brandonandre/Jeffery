@@ -94,6 +94,8 @@ void moveDistance(long mm, int motorSpeed, int direction)
         motorTwoDegrees = (mm / WHEEL_CIRC * 360);      //forwards
     }
 
+    printf("Motor One Degree: %d, Motor Two Degree: %d\n", motorOneDegrees, motorTwoDegrees);
+
     mc.setMotorDegrees(DC_ADDRESS, motorSpeed, motorOneDegrees, motorSpeed, motorTwoDegrees);
 }
 
