@@ -1,3 +1,6 @@
+#ifndef ROBOT
+#define ROBOT
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -51,3 +54,8 @@ void clamp();
 void unclamp();
 void wait();
 void close();
+
+/* Memory */
+int headPosition = HEAD_TOP;
+
+#endif

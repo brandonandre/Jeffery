@@ -6,9 +6,6 @@ NiFpga_Status status;
 Motor_Controller mc;
 MyRio_I2c i2c;
 
-/* Memory */
-int headPosition = HEAD_TOP;
-
 /*
 *    Purpose: reset and initialize the motor controllers and other starting processes.
 *    Date: Septemeber 30, 2019
