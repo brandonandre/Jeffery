@@ -6,9 +6,6 @@ NiFpga_Status status;
 Motor_Controller mc;
 MyRio_I2c i2c;
 
-/* Memory */
-int headPosition = HEAD_TOP;
-
 /*
 *    Purpose: reset and initialize the motor controllers and other starting processes.
 *    Date: Septemeber 30, 2019
@@ -158,7 +155,7 @@ void tightTurn(long degrees)
 *    Return value:  Int, range from 0 to 100. 100 Being the very top of the robot, 0 being the bottom.
 */
 int getCurrentHeadPosition() {
-    return headPosition; 
+    return 0; 
 }
 
 /*
@@ -178,7 +175,7 @@ void resetHead() {
     // Stop moving the servo motor.
     mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, SERVO_STOP);
 
-    headPosition = HEAD_TOP;
+    //headPosition = HEAD_TOP;
 }
 
 /*
@@ -190,12 +187,11 @@ void resetHead() {
                         0 being the bottom of the robot belt, 100 being the top of the robot belt.
                         You can also use the constants, HEAD_TOP and HEAD_BOTTOM.
 *    Return value:  None
-*/
 void moveHead(int position) 
 {
     // Don't do anything if the current position is where it needs to be.
-    if (position == headPosition)
-        return;
+    //if (position == headPosition)
+    //    return;
 
     // Check if the position matches the limit constrains.
     if (position > 100 || position < 0)
@@ -217,13 +213,14 @@ void moveHead(int position)
     }
 
     // Determine how long to move the servo so it reaches the dersired location.
-    Utils::waitFor(abs(headPosition - position));
+    //Utils::waitFor(abs(headPosition - position));
 
-    headPosition = position;
+    //headPosition = position;
 
     // Stop the servo motor from spinning.
     mc.setServoSpeed(SERVO_ADDRESS, HEAD_SERVO, SERVO_STOP);
 }
+*/
 
 /*
 *    Purpose:       Move the clamp servo to hold on to an object.
