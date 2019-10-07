@@ -19,9 +19,9 @@ int headPosition = HEAD_TOP;
 */
 void begin()
 {
-    int status = MyRio_Open();
+    MyRio_Open();
 
-    status = Utils::setupI2CB(&myrio_session, &i2c);
+    Utils::setupI2CB(&myrio_session, &i2c);
 
     mc = Motor_Controller();
     mc.init(&myrio_session);
