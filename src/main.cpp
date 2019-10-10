@@ -40,6 +40,7 @@ int main(int argc, char const *argv[])
         case 5:
             printf("WAG!\n");
             wagTail();
+            break;
         case 6:
             running = false;
             break;
