@@ -20,11 +20,11 @@ int main(int argc, char const *argv[])
         switch (response) {
         case 1:
             printf("MOVE FORWARDS!\n");
-            moveDistance(100, SPEED, FORWARDS);
+            moveDistance(300, SPEED, FORWARDS);
             break;
         case 2:
             printf("MOVE BACKWARDS!\n");
-            moveDistance(100, SPEED, BACKWARDS);
+            moveDistance(300, SPEED, BACKWARDS);
             break;
         case 3:
             printf("TIGHT TURN LEFT!\n");
