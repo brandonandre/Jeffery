@@ -98,8 +98,8 @@ void moveDistance(long mm, int motorSpeed, int direction)
 
     mc.setMotorDegrees(DC_ADDRESS, motorSpeed, motorOneDegrees, motorSpeed, motorTwoDegrees);
     Utils::waitFor(mm / 60);
-    mc.resetEncoders(DC_ADDRESS);
     Utils::waitFor(1);
+    mc.resetEncoders(DC_ADDRESS);
 }
 
 /*
