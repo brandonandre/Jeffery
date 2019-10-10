@@ -14,8 +14,7 @@ int main(int argc, char const *argv[])
         printf("\t2. Move Backwards\n");
         printf("\t3. Tight Turn Left\n");
         printf("\t4. Tight Turn Right\n");
-        printf("\t5. Arrow Key Mode\n");
-        printf("\t6. Exit\n");
+        printf("\t5. Exit\n");
 
         int response;
         scanf("%d", &response);
@@ -38,16 +37,6 @@ int main(int argc, char const *argv[])
             tightTurn(90);
             break;
         case 5:
-            printf("Arrow Key Activiated! Ctrl+C to quit.\n");
-
-            while(true) {
-                char thing;
-                cin >> thing;
-                printf("Keypress: %c\n");
-            }
-
-            break;
-        case 6:
             running = false;
             break;
         
