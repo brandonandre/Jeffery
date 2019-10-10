@@ -253,13 +253,13 @@ void unclamp() {
 }
 
 void wagTail() {
-    mc.setServoPosition(SERVO_ADDRESS, 1, 50);
+    mc.setServoPosition(SERVO_ADDRESS, 1, 30);
     Utils::waitFor(1);
-    mc.setServoPosition(SERVO_ADDRESS, 1, 100);
+    mc.setServoPosition(SERVO_ADDRESS, 1, 150);
     Utils::waitFor(1);
-    mc.setServoPosition(SERVO_ADDRESS, 1, 50);
+    mc.setServoPosition(SERVO_ADDRESS, 1, 30);
     Utils::waitFor(1);
-    mc.setServoPosition(SERVO_ADDRESS, 1, 100);
+    mc.setServoPosition(SERVO_ADDRESS, 1, 150);
     Utils::waitFor(1);
     mc.setServoSpeed(SERVO_ADDRESS, 1, 0);
 }
