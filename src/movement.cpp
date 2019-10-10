@@ -150,7 +150,7 @@ void tightTurn(long degrees)
     mc.setMotorDegrees(DC_ADDRESS, SPEED, wheelTurn, SPEED, wheelTurn);
 
     // Reset the encoders after the turn has taken place.
-    Utils::waitFor(abs(degrees) / 30);
+    Utils::waitFor(abs(degrees) / 25);
     mc.resetEncoders(DC_ADDRESS);
     Utils::waitFor(1);
 }
@@ -250,4 +250,11 @@ void clamp() {
 */
 void unclamp() {
     mc.setServoSpeed(SERVO_ADDRESS, CLAW_SERVO, CLAW_OPEN);
+}
+
+void wagTail() {
+    mc.setServoPosition(SERVO_ADDRESS, 0x28, 80);
+    Utils::waitFor(1);
+    mc.setServoPosition(SERVO_ADDRESS, 0x28, 100);
+    Utils::waitFor(1);
 }

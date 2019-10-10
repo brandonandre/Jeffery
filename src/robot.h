@@ -52,6 +52,7 @@ int getCurrentHeadPosition();
 void resetHead();
 void clamp();
 void unclamp();
+void wagTail();
 void wait();
 void close();
 #endif
