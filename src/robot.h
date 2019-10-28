@@ -1,3 +1,6 @@
+#ifndef ROBOT
+#define ROBOT
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,12 +13,6 @@
 #include "Utils.h"
 
 using namespace std;
-
-/* Begin Variables */
-extern NiFpga_Session myrio_session;
-NiFpga_Status status;
-Motor_Controller mc;
-MyRio_I2c i2c;
 
 /* Constants */
 #define DC_ADDRESS 1                /* I2C address for the DC Motor */
@@ -37,6 +34,14 @@ MyRio_I2c i2c;
 #define JEFF_WIDTH 270             /* Width of robot from wheel to wheel in mm */
 #define WHEEL_CIRC 319.19             /* Circumference of each wheel on robot in mm */
 
+/* Servo Addresses*/
+#define HEAD_SERVO 0x28 /* Address for the head servo 1 */
+#define CLAW_SERVO 0x29 /* Address for claw servo 2 */
+
+/* Claw Constants */
+#define CLAW_OPEN 180
+#define CLAW_CLOSED 0
+
 /* Function Prototypes */
 void begin();
 void moveDistance(long mm, int motorSpeed = SPEED, int direction = FORWARDS);
@@ -47,5 +52,7 @@ int getCurrentHeadPosition();
 void resetHead();
 void clamp();
 void unclamp();
+void wagTail();
 void wait();
 void close();
+#endif
