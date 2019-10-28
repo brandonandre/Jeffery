@@ -1,0 +1,4 @@
+﻿  opencv_test.cpp
+C:\Users\micha\source\repos\opencv_test\opencv_test\opencv_test.cpp(8,1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+C:\Users\micha\source\repos\opencv_test\opencv_test\opencv_test.cpp : message : see previous definition of '_CRT_SECURE_NO_WARNINGS'
+  opencv_test.vcxproj -> C:\Users\micha\source\repos\opencv_test\x64\Debug\opencv_test.exe
