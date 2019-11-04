@@ -368,11 +368,12 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
 			if ((left_distance >= 1.629754 && left_distance <= 1.761912) && (right_distance >= 1.586607 && right_distance <= 1.801996) && (mouth_distance >= 1.352993 && mouth_distance <= 1.584232)) {
 				printf("HI MICHAEL!\n");
-                wagTail();
+                moveDistance(300, SPEED, FORWARDS);
 			}
 			else {
 				printf("Left eye to face center: %lf Right eye to face center: %lf Mouth by eye distance: %lf\n", left_distance, right_distance, mouth_distance);
-			}
+                wagTail();
+            }
 			
 		}
 		/*End of stuff I wrote*/
