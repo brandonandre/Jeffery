@@ -1,8 +1,10 @@
-#include "robot.h"
+#include "headers/robot.h"
+#include <opencv2/opencv.hpp>
+#include "headers/csupport/MyRio.h"
+#include "headers/myrio/I2C.h"
+#include "headers/myrio/Motor_Controller.h"
+#include "headers/myrio/Utils.h"
 #include <iostream>
-#include "opencv/objdetect.hpp"
-#include "opencv/highgui.hpp"
-#include "opencv/imgproc.hpp"
 #include <math.h>
 #include <fstream>
 
