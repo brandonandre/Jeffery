@@ -1,8 +1,8 @@
 #include "robot.h"
 #include <iostream>
-#include "objdetect.hpp"
-#include "highgui.hpp"
-#include "imgproc.hpp"
+#include "opencv/objdetect.hpp"
+#include "opencv/highgui.hpp"
+#include "opencv/imgproc.hpp"
 #include <math.h>
 #include <fstream>
 
