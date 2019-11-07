@@ -1,0 +1,3 @@
+/Users/brandonandre/Jeffery/CMakeFiles/rebuild_cache.dir
+/Users/brandonandre/Jeffery/CMakeFiles/edit_cache.dir
+/Users/brandonandre/Jeffery/CMakeFiles/jeffrey.dir

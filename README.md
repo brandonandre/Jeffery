@@ -3,8 +3,18 @@ The dog robot
 
 # How to compile
 
-1. Download and install docker for your computer.
-2. Run "docker build -t compiler ."
+
+# How to generate new MAKE file
+
+1. Make sure you have cmake installed. For Debian based systems:
+
+`sudo apt-get install cmake`
+
+2. Then run it on the project:
+
+`cmake .`
+
+You will need to have all of the libraries installed.
 
 # Contributors
 

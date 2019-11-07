@@ -1,2 +1,0 @@
-﻿  opencv_test.cpp
-C:\Users\micha\source\repos\opencv_test\opencv_test\opencv_test.cpp(1,10): fatal error C1083: Cannot open include file: 'opencv2/core/core.hpp': No such file or directory
