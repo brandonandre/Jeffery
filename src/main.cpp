@@ -44,6 +44,8 @@ int main(int argc, const char** argv)
 	CascadeClassifier cascade, nestedCascade, mouthCascade;
 	double scale;
 
+    begin();
+
 	cv::CommandLineParser parser(argc, argv,
 		"{help h||}"
 		"{cascade|data/haarcascades/haarcascade_frontalface_alt.xml|}"
