@@ -1,6 +1,10 @@
 #ifndef ROBOT
 #define ROBOT
 
+#include "MyRio.h"
+#include "I2C.h"
+#include "Motor_Controller.h"
+#include "Utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
