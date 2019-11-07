@@ -366,7 +366,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 			else if (highest_mouth < mouth_distance) {
 				highest_mouth = mouth_distance;
 			}
-#endif LEARNING
+#endif
 
 			if ((left_distance >= 1.629754 && left_distance <= 1.761912) && (right_distance >= 1.586607 && right_distance <= 1.801996) && (mouth_distance >= 1.352993 && mouth_distance <= 1.584232)) {
 				printf("HI MICHAEL!\n");
