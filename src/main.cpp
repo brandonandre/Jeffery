@@ -48,8 +48,6 @@ int main(int argc, const char** argv) {
 
 		// Setup the image sender.
 		if(imageSender.init() < 0) {
-			return 1;
-		} else {
 			cout << "Image sender could not be setup. Contining without it." << endl;
 		}
 
