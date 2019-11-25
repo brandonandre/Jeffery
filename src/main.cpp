@@ -50,7 +50,7 @@ int main(int argc, const char** argv) {
 		if(imageSender.init() < 0) {
 			return 1;
 		} else {
-			cout << "Image sender could not be setup. Contining without it.";
+			cout << "Image sender could not be setup. Contining without it." << endl;
 		}
 
 		while(true) {
