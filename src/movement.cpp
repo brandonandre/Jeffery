@@ -252,6 +252,13 @@ void unclamp() {
     mc.setServoSpeed(SERVO_ADDRESS, CLAW_SERVO, CLAW_OPEN);
 }
 
+/**
+ * Purpose:         Wag the robots tail.
+ * Date:            25/11/2019
+ * Authors:         Brandon Andre
+ * Parameters:      None
+ * Return Value:    None
+ */
 void wagTail() {
     mc.setServoPosition(SERVO_ADDRESS, 1, 30);
     Utils::waitFor(1);
@@ -262,4 +269,18 @@ void wagTail() {
     mc.setServoPosition(SERVO_ADDRESS, 1, 150);
     Utils::waitFor(1);
     mc.setServoSpeed(SERVO_ADDRESS, 1, 0);
+}
+
+/**
+ * Purpose:         Shake the whole robot very quickly.
+ * Date:            25/11/2019
+ * Authors:         Brandon Andre
+ * Parameters:      None
+ * Return Value:    None
+ */
+void shake() {
+    tightTurn(20);
+    tightTurn(-40);
+    tightTurn(40);
+    tightTurn(-20);
 }

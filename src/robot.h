@@ -52,6 +52,7 @@ void resetHead();
 void clamp();
 void unclamp();
 void wagTail();
+void shake();
 void wait();
 void close();
 #endif

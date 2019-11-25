@@ -30,14 +30,12 @@ string nestedCascadeName;
 string mouthCascadeName;
 long double lowest_right = 0, lowest_left = 0, lowest_mouth = 0;
 long double highest_left = 0, highest_right = 0, highest_mouth = 0;
-
 ImageSender imageSender;
 
 int main(int argc, const char** argv) {
 	VideoCapture capture;
 	Mat frame, image;
 	string inputName;
-	bool tryflip;
 	CascadeClassifier cascade, nestedCascade, mouthCascade;
 	double scale;
 
@@ -61,18 +59,23 @@ int main(int argc, const char** argv) {
 				break;
 
 			Mat frame1 = frame.clone();
-			detectAndDraw(frame1, cascade, nestedCascade, mouthCascade, scale, tryflip);
+			detectAndDraw(frame1, cascade, nestedCascade, mouthCascade, scale);
 		}
 	}
 	
 	return 0;
 }
 
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,
-	CascadeClassifier& nestedCascade,
-	CascadeClassifier& mouthCascade,
-	double scale, bool tryflip)
-{
+/**
+ * 
+ * Detect and Draw on top of image.
+ * 
+ * @param img Webcam capture at a particular moment to analyze.
+ * 
+ */
+void detectAndDraw(Mat& img, CascadeClassifier& cascade, CascadeClassifier& nestedCascade,
+	CascadeClassifier& mouthCascade, double scale) {
+
 	double t = 0;
 	vector<Rect> faces, faces2;
 	const static Scalar colors[] =
@@ -100,21 +103,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 		//|CASCADE_DO_ROUGH_SEARCH
 		| CASCADE_SCALE_IMAGE,
 		Size(30, 30));
-	if (tryflip)
-	{
-		flip(smallImg, smallImg, 1);
-		cascade.detectMultiScale(smallImg, faces2,
-			1.1, 2, 0
-			//|CASCADE_FIND_BIGGEST_OBJECT
-			//|CASCADE_DO_ROUGH_SEARCH
-			| CASCADE_SCALE_IMAGE,
-			Size(30, 30));
-		for (vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
-		{
-			faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
-		}
-	}
-	t = (double)getTickCount() - t;
+
 	//printf("detection time = %g ms\n", t * 1000 / getTickFrequency());
 	for (size_t i = 0; i < faces.size(); i++)
 	{
@@ -208,6 +197,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 			else {
 				printf("Left eye to face center: %lf Right eye to face center: %lf Mouth by eye distance: %lf\n", left_distance, right_distance, mouth_distance);
                 wagTail();
+				shake();
             }
 			
 		}
@@ -226,6 +216,4 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 	#if SEND_IMAGE
 	    imageSender.send(&img);
 	#endif
-
-	imshow("result", img);
 }
