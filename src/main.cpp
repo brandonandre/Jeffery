@@ -13,7 +13,7 @@ using namespace std;
 using namespace cv;
 
 /* Options */
-#define SEND_IMAGE 1;
+#define SEND_IMAGE 1
 
 /* Function Prototypes */
 void detectAndDraw(
@@ -36,7 +36,7 @@ int main(int argc, const char** argv) {
 	Mat frame, image;
 	string inputName;
 	CascadeClassifier cascade, nestedCascade, mouthCascade;
-	double scale;
+	double scale = 1;
 
 	// Setup the motor controller.
     begin();
@@ -48,6 +48,8 @@ int main(int argc, const char** argv) {
 		// Setup the image sender.
 		if(imageSender.init() < 0) {
 			cout << "Image sender could not be setup. Contining without it." << endl;
+		} else {
+			cout << "Image sending setup. " << endl;
 		}
 
 		while(true) {
@@ -73,7 +75,6 @@ int main(int argc, const char** argv) {
 void detectAndDraw(Mat& img, CascadeClassifier& cascade, CascadeClassifier& nestedCascade,
 	CascadeClassifier& mouthCascade, double scale) {
 
-	double t = 0;
 	vector<Rect> faces, faces2;
 	const static Scalar colors[] =
 	{
@@ -93,7 +94,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade, CascadeClassifier& nest
 	resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT);
 	equalizeHist(smallImg, smallImg);
 
-	t = (double)getTickCount();
 	cascade.detectMultiScale(smallImg, faces,
 		1.1, 2, 0
 		//|CASCADE_FIND_BIGGEST_OBJECT
