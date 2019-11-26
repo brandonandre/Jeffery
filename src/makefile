@@ -10,7 +10,7 @@ OBJS	= main.o movement.o
 SOURCE	= main.cpp movement.cpp
 
 # Location of the executable.
-OUT		= ../build/jeffrey.out
+OUT		= ../build/jeffery.out
 
 # Compiler settings
 CC		= /usr/local/oecore-x86_64/sysroots/x86_64-nilrtsdk-linux/usr/bin/arm-nilrt-linux-gnueabi/arm-nilrt-linux-gnueabi-g++ 
