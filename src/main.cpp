@@ -21,8 +21,7 @@ void detectAndDraw(
 	CascadeClassifier& cascade,
 	CascadeClassifier& nestedCascade,
 	CascadeClassifier& mouthCascade,
-	double scale, 
-	bool 
+	double scale
 );
 
 string cascadeName;
