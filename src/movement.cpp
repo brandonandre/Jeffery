@@ -29,6 +29,15 @@ void begin()
 
     int volt = mc.readBatteryVoltage(1);
     printf("Battery Voltage: %d\n\n", volt);
+
+    if (volt > 3000) {
+        printf("Connected to the DC charger!\n");
+    }
+
+    // Check if Jeffrey needs to be charged.
+    if (volt < 1500) {
+        printf("Please charge me!\n");
+    }
 }
 
 /*
@@ -150,7 +159,7 @@ void tightTurn(long degrees)
     mc.setMotorDegrees(DC_ADDRESS, SPEED, wheelTurn, SPEED, wheelTurn);
 
     // Reset the encoders after the turn has taken place.
-    Utils::waitFor(abs(degrees) / 25);
+    Utils::waitFor(abs(degrees) / 5);
     mc.resetEncoders(DC_ADDRESS);
     Utils::waitFor(1);
 }
