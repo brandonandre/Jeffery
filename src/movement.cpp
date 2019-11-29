@@ -159,7 +159,7 @@ void tightTurn(long degrees)
     mc.setMotorDegrees(DC_ADDRESS, SPEED, wheelTurn, SPEED, wheelTurn);
 
     // Reset the encoders after the turn has taken place.
-    Utils::waitFor(abs(degrees) / 5);
+    Utils::waitFor(abs(degrees) / 10);
     mc.resetEncoders(DC_ADDRESS);
     Utils::waitFor(1);
 }

@@ -13,19 +13,24 @@ using namespace std;
 using namespace cv;
 
 /* Options */
-#define SEND_IMAGE 1
-#define CASCADE_TO_APPLY "data/haarcascades/haarcascade_frontalface_alt.xml"
+#define SEND_IMAGE 0
+#define FRONT_FACE "data/haarcascades/haarcascade_frontalface_alt.xml"
+#define FRONT_FACE_1 "data/haarcascades/haarcascade_profileface.xml"
+#define FRONT_FACE_2 "data/haarcascades/haarcascade_frontalface_default.xml"
+#define PROFILE_FACE "data/haarcascades/haarcascade_profileface.xml"
 
 /* Function Prototypes */
 vector<Rect> scanForPeople(Mat&);
 void sendClienvoidtImage(Mat&);
-void turnTowardsPerson(vector<Rect> facesFound);
+int turnTowardsPerson(vector<Rect> facesFound);
 long rangeMap(long, long, long, long, long);
 void sendClientImage(Mat&);
+int getArea(Rect face);
 
 /* Global Variables */
 ImageSender imageSender;
 int framesToSend = 0;
+int currentCascade = 0;
 
 /*
  * Start the camera and begin the robotic flow.
@@ -40,7 +45,7 @@ int main(int argc, const char** argv) {
 
 	// Start capturing video from the webcam.
 	if (capture.isOpened()) {
-		printf("Video capturing has been started ...\n");
+		printf("Video capturing has been started...\n");
 
 		// Setup the image sender.
 		#if SEND_IMAGE
@@ -55,22 +60,21 @@ int main(int argc, const char** argv) {
 		int framesCounted = 0;
 
 		while(true) {
+			// Display image to screen.
+
 			capture >> frame;
 			if (frame.empty())
 				break;
 
-			// Frame for viewing...
-			Mat frame1 = frame.clone();
-			Mat grayCameraImage;
-			cvtColor(frame1, grayCameraImage, COLOR_BGR2GRAY);
+			// Frame for processing...
+			Mat grayCameraImage = frame.clone();
+			cvtColor(grayCameraImage, grayCameraImage, COLOR_BGR2GRAY);
 			equalizeHist(grayCameraImage, grayCameraImage);
-			resize(grayCameraImage, grayCameraImage, cv::Size(), INTER_LINEAR)
-			
-			// Send the image out to the client program for viewing.
-			sendClientImage(grayCameraImage);
+
+			//sendClientImage(frame);
 
 			// Scan for people...
-			vector<Rect> facesFound = scanForPeople(frame1);
+			vector<Rect> facesFound = scanForPeople(grayCameraImage);
 			if (facesFound.empty()) {
 				framesCounted++;
 				// Check if alone for a long time.
@@ -82,7 +86,10 @@ int main(int argc, const char** argv) {
 				// Face(s) found! Turn towards the person.
 				framesCounted = 0;
 				printf("Turn towards the person.\n");
-				turnTowardsPerson(facesFound);
+				if (turnTowardsPerson(facesFound)) {
+					wagTail();
+					moveSeconds(2, FORWARDS);
+				}
 			}
 			
 		}
@@ -93,11 +100,40 @@ int main(int argc, const char** argv) {
 	return 0;
 }
 
-void turnTowardsPerson(vector<Rect> facesFound) {
+int turnTowardsPerson(vector<Rect> facesFound) {
 	Rect faceToFollow = facesFound[0];
-	long turnRadius = rangeMap((faceToFollow.x + (faceToFollow.width / 2)), 0, 1000, -50, 50);
-	printf("Turn Radius: %ld - X: %d\n", turnRadius, (faceToFollow.x + (faceToFollow.width / 2)));
+	for (size_t i = 1; i < facesFound.size(); i++) {
+		if (getArea(facesFound[i]) > getArea(faceToFollow)) {
+			printf("Bigger face selected.\n");
+			faceToFollow = facesFound[i];
+		}
+	}
+
+	printf("X: %d\n", (faceToFollow.x + (faceToFollow.width / 2)));
+
+	int faceX = (faceToFollow.x + (faceToFollow.width / 2));
+	long turnRadius = 0;
+	if (currentCascade == 2) {
+		turnRadius = rangeMap(faceX, 0, 640, 35, -35);
+	} else {
+		turnRadius = rangeMap(faceX, 80, 640, -35, 35);
+	}
+
+	// Check if directly facing the person.
+	if (turnRadius > -15 && turnRadius < 15) {
+		printf("Head on!\n");
+		return 0;
+	}
+
+	printf("Turn Radius: %ld - X: %d\n", turnRadius, faceX);
+
 	tightTurn(turnRadius);
+
+	return 1;
+}
+
+int getArea(Rect face) {
+	return face.height * face.width;
 }
 
 /*
@@ -109,12 +145,7 @@ long rangeMap(long x, long in_min, long in_max, long out_min, long out_max) {
 
 void sendClientImage(Mat& cameraImage) {
 	#if SEND_IMAGE
-		framesToSend++;
-
-		if (framesToSend == 3) {
-			framesToSend = 0;
-			imageSender.send(&cameraImage);	
-		}
+		imageSender.send(&cameraImage);	
 	#endif	
 }
 
@@ -129,8 +160,29 @@ vector<Rect> scanForPeople(Mat& cameraImage) {
 
 	// Setup the face detection classifier.
 	CascadeClassifier faceDetection;
-	if (!faceDetection.load(CASCADE_TO_APPLY)) {
-		printf("Error - Could not load the classifer file.");
+
+	switch(currentCascade) {
+		case 0:
+			faceDetection.load(FRONT_FACE);
+			printf("FRONT SCAN (1)\n");
+			currentCascade++;
+			break;
+		case 1:
+			faceDetection.load(FRONT_FACE_1);
+			flip(cameraImage, cameraImage, 1);
+			printf("PROFILE SCAN FLIPPED (2)\n");
+			currentCascade++;
+			break;
+		case 2:
+			faceDetection.load(FRONT_FACE_2);
+			printf("FRONT SCAN (3)\n");
+			currentCascade++;
+			break;
+		case 3:
+			faceDetection.load(PROFILE_FACE);
+			printf("PROFILE SCAN (4)\n");
+			currentCascade = 0;
+			break;
 	}
 
 	// Run the detection.
