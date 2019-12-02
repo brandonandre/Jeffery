@@ -39,6 +39,7 @@ int main(int argc, const char** argv) {
 	// Configure the camera
 	capture.set(CAP_PROP_FRAME_WIDTH, 43);
     capture.set(CAP_PROP_FRAME_HEIGHT, 18);
+	capture.set(CAP_PROP_BUFFERSIZE, 1);
 
 	// Setup the motor controller.
 	printf("Jeffrey starting up.\n");
@@ -85,12 +86,17 @@ int main(int argc, const char** argv) {
 				}
 			} else {
 				// Face(s) found! Turn towards the person.
-				framesCounted = 0;
-				printf("Turn towards the person.\n");
 				int turnResponse = turnTowardsPerson(facesFound);
 				if (turnResponse) {
 					//moveDistance(100, 100, FORWARDS);
-					//wagTail();
+					wagTail();
+
+					// Release the camera and start a new one...
+					capture.release();
+					capture = VideoCapture(0);
+					capture.set(CAP_PROP_FRAME_WIDTH, 43);
+					capture.set(CAP_PROP_FRAME_HEIGHT, 18);
+					capture.set(CAP_PROP_BUFFERSIZE, 1);
 				} else if (turnResponse == 3) {
 					//wagTail();
 				}
@@ -117,11 +123,11 @@ int turnTowardsPerson(vector<Rect> facesFound) {
 
 	int faceX = (faceToFollow.x + (faceToFollow.width / 2));
 	long turnRadius = 0;
-	turnRadius = rangeMap(faceX, 0, 200, 35, -35);
+	turnRadius = rangeMap(faceX, 180, 20, 20, -20);
 
 	// Check if directly facing the person.
-	if (turnRadius > -15 && turnRadius < 15) {
-		printf("Head on! Area: %f\n", getArea(faceToFollow));
+	if (turnRadius > -10 && turnRadius < 10) {
+		printf("Head on! Area: %d\n", getArea(faceToFollow));
 		return 1;
 	}
 
