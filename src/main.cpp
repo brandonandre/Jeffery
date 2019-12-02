@@ -81,7 +81,16 @@ int main(int argc, const char** argv) {
 				framesCounted++;
 				// Check if alone for a long time.
 				if (framesCounted == 10) {
-					printf("Alone mode!\n");
+					tightTurn(-60);
+				} else if (framesCounted == 15) {
+					tightTurn(50);
+				} else if (framesCounted == 15) {
+					tightTurn(100);
+				} else if (framesCounted == 20) {
+					tightTurn(-230);
+				} else if (framesCounted == 25) {
+					tightTurn(180);
+					// reset frame count
 					framesCounted = 0;
 				}
 			} else {
