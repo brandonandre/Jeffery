@@ -88,7 +88,9 @@ int main(int argc, const char** argv) {
 				} else if (framesCounted == 20) {
 					tightTurn(-230);
 				} else if (framesCounted == 25) {
-					tightTurn(180;)
+					tightTurn(180);
+					// reset frame count
+					framesCounted = 0;
 				}
 			} else {
 				// Face(s) found! Turn towards the person.
