@@ -288,8 +288,8 @@ void wagTail() {
  * Return Value:    None
  */
 void shake() {
-    tightTurn(20);
-    tightTurn(-40);
-    tightTurn(40);
-    tightTurn(-20);
+    tightTurn(15);
+    tightTurn(-30);
+    tightTurn(30);
+    tightTurn(-15);
 }

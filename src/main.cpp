@@ -15,9 +15,6 @@ using namespace cv;
 /* Options */
 #define SEND_IMAGE 0
 #define FRONT_FACE "data/haarcascades/haarcascade_frontalface_alt.xml"
-#define FRONT_FACE_1 "data/haarcascades/haarcascade_profileface.xml"
-#define FRONT_FACE_2 "data/haarcascades/haarcascade_frontalface_default.xml"
-#define PROFILE_FACE "data/haarcascades/haarcascade_profileface.xml"
 
 /* Function Prototypes */
 vector<Rect> scanForPeople(Mat&);
@@ -38,6 +35,10 @@ int currentCascade = 0;
 int main(int argc, const char** argv) {
 	VideoCapture capture(0);
 	Mat frame, image;
+
+	// Configure the camera
+	capture.set(CAP_PROP_FRAME_WIDTH, 43);
+    capture.set(CAP_PROP_FRAME_HEIGHT, 18);
 
 	// Setup the motor controller.
 	printf("Jeffrey starting up.\n");
@@ -71,10 +72,10 @@ int main(int argc, const char** argv) {
 			cvtColor(grayCameraImage, grayCameraImage, COLOR_BGR2GRAY);
 			equalizeHist(grayCameraImage, grayCameraImage);
 
-			//sendClientImage(frame);
-
 			// Scan for people...
+			printf("Frame!\n");
 			vector<Rect> facesFound = scanForPeople(grayCameraImage);
+			printf("Processed!\n");
 			if (facesFound.empty()) {
 				framesCounted++;
 				// Check if alone for a long time.
@@ -86,9 +87,12 @@ int main(int argc, const char** argv) {
 				// Face(s) found! Turn towards the person.
 				framesCounted = 0;
 				printf("Turn towards the person.\n");
-				if (turnTowardsPerson(facesFound)) {
-					wagTail();
-					moveSeconds(2, FORWARDS);
+				int turnResponse = turnTowardsPerson(facesFound);
+				if (turnResponse) {
+					//moveDistance(100, 100, FORWARDS);
+					//wagTail();
+				} else if (turnResponse == 3) {
+					//wagTail();
 				}
 			}
 			
@@ -113,23 +117,19 @@ int turnTowardsPerson(vector<Rect> facesFound) {
 
 	int faceX = (faceToFollow.x + (faceToFollow.width / 2));
 	long turnRadius = 0;
-	if (currentCascade == 2) {
-		turnRadius = rangeMap(faceX, 0, 640, 35, -35);
-	} else {
-		turnRadius = rangeMap(faceX, 80, 640, -35, 35);
-	}
+	turnRadius = rangeMap(faceX, 0, 200, 35, -35);
 
 	// Check if directly facing the person.
 	if (turnRadius > -15 && turnRadius < 15) {
-		printf("Head on!\n");
-		return 0;
+		printf("Head on! Area: %f\n", getArea(faceToFollow));
+		return 1;
 	}
 
 	printf("Turn Radius: %ld - X: %d\n", turnRadius, faceX);
 
 	tightTurn(turnRadius);
 
-	return 1;
+	return 0;
 }
 
 int getArea(Rect face) {
@@ -161,29 +161,7 @@ vector<Rect> scanForPeople(Mat& cameraImage) {
 	// Setup the face detection classifier.
 	CascadeClassifier faceDetection;
 
-	switch(currentCascade) {
-		case 0:
-			faceDetection.load(FRONT_FACE);
-			printf("FRONT SCAN (1)\n");
-			currentCascade++;
-			break;
-		case 1:
-			faceDetection.load(FRONT_FACE_1);
-			flip(cameraImage, cameraImage, 1);
-			printf("PROFILE SCAN FLIPPED (2)\n");
-			currentCascade++;
-			break;
-		case 2:
-			faceDetection.load(FRONT_FACE_2);
-			printf("FRONT SCAN (3)\n");
-			currentCascade++;
-			break;
-		case 3:
-			faceDetection.load(PROFILE_FACE);
-			printf("PROFILE SCAN (4)\n");
-			currentCascade = 0;
-			break;
-	}
+	faceDetection.load(FRONT_FACE);
 
 	// Run the detection.
 	faceDetection.detectMultiScale(
@@ -192,7 +170,7 @@ vector<Rect> scanForPeople(Mat& cameraImage) {
 		1.1,
 		3,
 		0 | CASCADE_SCALE_IMAGE,
-		Size(30, 30)
+		Size(0, 0)
 	);
 
 	// Render the faces onto the screen.
@@ -208,6 +186,8 @@ vector<Rect> scanForPeople(Mat& cameraImage) {
 				  0
 		);
 	}
+
+	sendClientImage(cameraImage);
 
 	// Return the rectangle for additional processing.
 	return faces;
